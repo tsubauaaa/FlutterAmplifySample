@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class EventPage extends StatefulWidget {
-  final VoidCallback shouldLogOut;
-  const EventPage({Key? key, required this.shouldLogOut}) : super(key: key);
+  const EventPage({Key? key}) : super(key: key);
 
   @override
   State<EventPage> createState() => _EventPageState();
@@ -17,7 +16,7 @@ class _EventPageState extends State<EventPage> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.lock_open),
-            onPressed: widget.shouldLogOut,
+            onPressed: () {},
           ),
         ],
       ),

@@ -1,20 +1,16 @@
+import 'package:app/providers/auth_repository_provider.dart';
 import 'package:app/services/auth_credentials.dart';
-import 'package:app/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginPage extends StatefulWidget {
-  final ValueChanged<LoginCredentials> didProvideCredentials;
-  const LoginPage(
-      {Key? key,
-      required this.didProvideCredentials,
-      })
-      : super(key: key);
+class LoginPage extends ConsumerStatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -26,14 +22,25 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _loginForm(),
+            _loginForm(context),
+            // TextButton(
+            //   child: const Text(
+            //     'Login',
+            //     style: TextStyle(color: Colors.black45),
+            //   ),
+            //   onPressed: () {
+            //     ref
+            //         .read(authRepositoryProvider)
+            //         .signIn("ts-hirota", "kddi0077");
+            //   },
+            // ),
           ],
         ),
       ),
     );
   }
 
-  Widget _loginForm() {
+  Widget _loginForm(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       TextField(
         controller: _usernameController,
@@ -48,16 +55,24 @@ class _LoginPageState extends State<LoginPage> {
         obscureText: true,
         keyboardType: TextInputType.visiblePassword,
       ),
-      TextButton(child: const Text('Login', style: TextStyle(color: Colors.black45),), onPressed: _login, ),
+      TextButton(
+        child: const Text(
+          'Login',
+          style: TextStyle(color: Colors.black45),
+        ),
+        onPressed: () => _login(context),
+      ),
     ]);
   }
 
-  void _login() {
+  Future<void> _login(BuildContext context) async {
     final username = _usernameController.text.trim();
     final password = _passwordController.text.trim();
 
     final credentials =
         LoginCredentials(username: username, password: password);
-    widget.didProvideCredentials(credentials);
+    final authRepo = ref.watch(authRepositoryProvider);
+    await authRepo.signIn(username, password);
+    // widget.didProvideCredentials(credentials);
   }
 }
