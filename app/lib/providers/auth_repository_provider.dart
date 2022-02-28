@@ -9,10 +9,10 @@ class AuthRepository {
   Future<String> get user async {
     try {
       final awsUser = await Amplify.Auth.getCurrentUser();
-      debugPrint(awsUser.toString());
+      debugPrint('awsUser: ${awsUser.toString()}');
       return awsUser.userId;
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('getCurrentUser failed. ${e.toString()}');
       return "";
     }
   }

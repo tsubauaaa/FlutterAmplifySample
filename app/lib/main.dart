@@ -20,22 +20,26 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _authService = AuthService();
+  bool _amplifyConfigured = false;
+
   @override
   void initState() {
     super.initState();
     _configureAmplify();
-    _authService.checkAuthStatus();
+    // _authService.checkAuthStatus();
   }
 
   Future<void> _configureAmplify() async {
-    Amplify.addPlugins([AmplifyAuthCognito()]);
+    await Amplify.addPlugins([AmplifyAuthCognito()]);
     try {
       await Amplify.configure(amplifyconfig);
       debugPrint('Successfully configured Amplify');
     } catch (e) {
       debugPrint(e.toString());
     }
+    setState(() {
+      _amplifyConfigured = true;
+    });
   }
 
   @override
@@ -45,7 +49,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: Consumer(
+        home: _amplifyConfigured ? Consumer(
           builder: (context, ref, child) {
             final currentUser = ref.watch(authProvider);
             return currentUser.when(
@@ -58,7 +62,7 @@ class _MyAppState extends State<MyApp> {
                 error: (error, stack) => Text(error.toString()),
                 loading: () => const CircularProgressIndicator());
           },
-        ),
+        ) : const CircularProgressIndicator(),
         // home: StreamBuilder<AuthState>(
         //   stream: _authService.authStateController.stream,
         //   builder: (context, snapshot) {

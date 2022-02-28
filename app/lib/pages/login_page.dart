@@ -34,6 +34,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             //         .signIn("ts-hirota", "kddi0077");
             //   },
             // ),
+            TextButton(
+              child: const Text(
+                'Logout',
+                style: TextStyle(color: Colors.black45),
+              ),
+              onPressed: () {
+                ref
+                    .read(authRepositoryProvider)
+                    .logOut();
+              },
+            ),
           ],
         ),
       ),
