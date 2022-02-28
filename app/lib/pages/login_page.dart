@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
         obscureText: true,
         keyboardType: TextInputType.visiblePassword,
       ),
-      FlatButton(child: const Text('Login'), onPressed: _login),
+      TextButton(child: const Text('Login', style: TextStyle(color: Colors.black45),), onPressed: _login, ),
     ]);
   }
 

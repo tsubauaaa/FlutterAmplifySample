@@ -13,10 +13,10 @@ class _EventPageState extends State<EventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Event Page'),
+        title: const Text('Event Page'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.exit_to_app),
+            icon: const Icon(Icons.lock_open),
             onPressed: widget.shouldLogOut,
           ),
         ],

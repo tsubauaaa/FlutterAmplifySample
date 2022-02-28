@@ -62,8 +62,6 @@ class AuthService {
         username: credentials.username,
         password: credentials.password,
       );
-      debugPrint(credentials.username);
-      debugPrint(credentials.password);
       if (result.isSignedIn) {
         debugPrint('Signed in');
         final state = AuthState(authFlowStatus: AuthFlowStatus.session);
