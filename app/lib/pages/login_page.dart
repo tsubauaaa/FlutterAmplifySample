@@ -1,3 +1,4 @@
+import 'package:app/providers/auth_provider.dart';
 import 'package:app/providers/auth_repository_provider.dart';
 import 'package:app/services/auth_credentials.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _loginForm(context),
+            _loginForm(),
             // TextButton(
             //   child: const Text(
             //     'Login',
@@ -40,9 +41,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 style: TextStyle(color: Colors.black45),
               ),
               onPressed: () {
-                ref
-                    .read(authRepositoryProvider)
-                    .logOut();
+                ref.read(authRepositoryProvider).logOut();
               },
             ),
           ],
@@ -51,7 +50,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
   }
 
-  Widget _loginForm(BuildContext context) {
+  Widget _loginForm() {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       TextField(
         controller: _usernameController,
@@ -71,12 +70,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           'Login',
           style: TextStyle(color: Colors.black45),
         ),
-        onPressed: () => _login(context),
+        onPressed: () {
+          _login();
+        },
       ),
     ]);
   }
 
-  Future<void> _login(BuildContext context) async {
+  Future<void> _login() async {
     final username = _usernameController.text.trim();
     final password = _passwordController.text.trim();
 
@@ -84,6 +85,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         LoginCredentials(username: username, password: password);
     final authRepo = ref.watch(authRepositoryProvider);
     await authRepo.signIn(username, password);
-    // widget.didProvideCredentials(credentials);
+    ref.refresh(authProvider);
   }
 }
