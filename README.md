@@ -83,7 +83,9 @@ $ aws cognito-idp admin-set-user-password \
 --permanent
 ```
 
-## Amplify Api Add
+## Amplify API の操作
+
+### Amplify Api Add
 
 ```
 $ amplify add api
@@ -95,16 +97,25 @@ $ amplify add api
 - schema template -> Single object with fields
 - schema.graphql を編集する
 
+### Amplify Api Update
+
+```
+$ amplify update api
+```
+
 - Enable conflict detection は add 時には Disable で add してその後、update 時に Auto Merge に update した
+- authorization type は add 時には APIKey で add してその後、update 時に Amazon Cognito User Pool に update した
 
-```
-$ amplify push
-```
-
-## Amplify Codegen models
+### Amplify Codegen models
 
 ```
 $ amplify codegen models
+```
+
+### Amplify Push
+
+```
+$ amplify push
 ```
 
 - ./lib/models に作成したスキーマのモデルクラスが作成される
@@ -127,3 +138,5 @@ mutation addEvent {
   }
 }
 ```
+
+AWS Console からのクエリだと Subscription がうまくいかなかったので注意

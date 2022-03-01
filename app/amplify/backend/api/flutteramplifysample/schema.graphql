@@ -3,7 +3,9 @@
 input AMPLIFY {
   globalAuthRule: AuthRule = { allow: public }
 } # FOR TESTING ONLY!
-type Event @model {
+type Event
+  @model
+  @auth(rules: [{ allow: owner, operations: [create, update, delete, read] }]) {
   id: ID!
   name: String!
   description: String
