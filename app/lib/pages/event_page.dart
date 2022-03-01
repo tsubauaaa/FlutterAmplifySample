@@ -26,13 +26,32 @@ class EventPage extends ConsumerWidget {
         ],
       ),
       body: items.when(
-        data: (items) => Center(
+        data: (data) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text('Event Page'),
-              Text('${items.length}'),
-            ],
+            children: data
+                .map(
+                  (item) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Amplify.DataStore.delete(item);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                        ),
+                        child: Column(
+                          children: [
+                            Text(item.name),
+                            Text(item.description ?? 'No description'),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
           ),
         ),
         error: (error, stack) => Text(
@@ -42,7 +61,8 @@ class EventPage extends ConsumerWidget {
       ),
       floatingActionButton: ElevatedButton(
         onPressed: () async {
-          await Amplify.DataStore.save(Event(name: "イベント名2"));
+          await Amplify.DataStore.save(
+              Event(name: "イベント名2", description: "イベント情報2"));
         },
         child: const Text('イベント追加'),
       ),
