@@ -1,9 +1,9 @@
 import 'package:app/providers/auth_repository_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final authProvider =
+final authUserProvider =
     FutureProvider<String>((ref) async {
-      final authRepo = ref.watch(authRepositoryProvider);
-      return await authRepo.user;
+      final authRepoProvider = ref.watch(authRepositoryProvider);
+      return await authRepoProvider.user;
     });
 

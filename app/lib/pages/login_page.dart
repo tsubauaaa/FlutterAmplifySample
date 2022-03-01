@@ -1,6 +1,5 @@
-import 'package:app/providers/auth_provider.dart';
+import 'package:app/providers/auth_user_provider.dart';
 import 'package:app/providers/auth_repository_provider.dart';
-import 'package:app/services/auth_credentials.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,26 +23,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _loginForm(),
-            // TextButton(
-            //   child: const Text(
-            //     'Login',
-            //     style: TextStyle(color: Colors.black45),
-            //   ),
-            //   onPressed: () {
-            //     ref
-            //         .read(authRepositoryProvider)
-            //         .signIn("ts-hirota", "kddi0077");
-            //   },
-            // ),
-            TextButton(
-              child: const Text(
-                'Logout',
-                style: TextStyle(color: Colors.black45),
-              ),
-              onPressed: () {
-                ref.read(authRepositoryProvider).logOut();
-              },
-            ),
           ],
         ),
       ),
@@ -80,11 +59,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Future<void> _login() async {
     final username = _usernameController.text.trim();
     final password = _passwordController.text.trim();
-
-    final credentials =
-        LoginCredentials(username: username, password: password);
-    final authRepo = ref.watch(authRepositoryProvider);
-    await authRepo.signIn(username, password);
-    ref.refresh(authProvider);
+    final authRepoProvider = ref.watch(authRepositoryProvider);
+    await authRepoProvider.signIn(username, password);
+    ref.refresh(authUserProvider);
   }
 }

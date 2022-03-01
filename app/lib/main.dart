@@ -3,8 +3,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:app/amplifyconfiguration.dart';
 import 'package:app/pages/event_page.dart';
 import 'package:app/pages/login_page.dart';
-import 'package:app/providers/auth_provider.dart';
-import 'package:app/services/auth_service.dart';
+import 'package:app/providers/auth_user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,7 +25,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _configureAmplify();
-    // _authService.checkAuthStatus();
   }
 
   Future<void> _configureAmplify() async {
@@ -51,7 +49,7 @@ class _MyAppState extends State<MyApp> {
         ),
         home: _amplifyConfigured ? Consumer(
           builder: (context, ref, child) {
-            final currentUser = ref.watch(authProvider);
+            final currentUser = ref.watch(authUserProvider);
             return currentUser.when(
                 data: (user) {
                   if (user.isEmpty) {
@@ -59,32 +57,10 @@ class _MyAppState extends State<MyApp> {
                   }
                   return const EventPage();
                 },
-                error: (error, stack) => Text(error.toString()),
-                loading: () => const CircularProgressIndicator());
+                error: (error, stack) => Text(error.toString(),),
+                loading: () => const CircularProgressIndicator(),);
           },
         ) : const CircularProgressIndicator(),
-        // home: StreamBuilder<AuthState>(
-        //   stream: _authService.authStateController.stream,
-        //   builder: (context, snapshot) {
-        //     if (snapshot.hasData) {
-        //       debugPrint(snapshot.data!.authFlowStatus.toString());
-        //       if (snapshot.data!.authFlowStatus == AuthFlowStatus.login) {
-        //         return LoginPage(
-        //           didProvideCredentials: _authService.loginWithCredentials,
-        //         );
-        //       }
-        //       if (snapshot.data!.authFlowStatus == AuthFlowStatus.session) {
-        //         return EventPage(
-        //           shouldLogOut: _authService.logOut,
-        //         );
-        //       }
-        //     }
-        //     return Container(
-        //       alignment: Alignment.center,
-        //       child: const CircularProgressIndicator(),
-        //     );
-        //   },
-        // ),
       ),
     );
   }

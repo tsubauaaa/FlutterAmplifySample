@@ -1,4 +1,4 @@
-import 'package:app/providers/auth_provider.dart';
+import 'package:app/providers/auth_user_provider.dart';
 import 'package:app/providers/auth_repository_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +16,7 @@ class EventPage extends ConsumerWidget {
             icon: const Icon(Icons.lock_open),
             onPressed: () async {
               await authRepoProvider.logOut();
-              ref.refresh(authProvider);
+              ref.refresh(authUserProvider);
             },
           ),
         ],
