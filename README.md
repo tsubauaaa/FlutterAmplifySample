@@ -91,8 +91,11 @@ $ amplify add api
 
 - GraphQL
 - authorization type -> Amazon Cognito User Pool
+- Enable conflict detection -> Yes, it is a auto merge.
 - schema template -> Single object with fields
 - schema.graphql を編集する
+
+- Enable conflict detection は add 時には Disable で add してその後、update 時に Auto Merge に update した
 
 ```
 $ amplify push
@@ -109,3 +112,18 @@ $ amplify codegen models
 ## Install amplify_api / amplify_datastore
 
 - pubspec.yaml に amplify_api と amplify_datastore をインストールする
+
+## AWS Console からデータを graphql 登録するクエリを実行する
+
+```
+mutation addEvent {
+  createEvent(
+    input: {
+      id: 1
+      name: "イベント名"
+      description: "イベント情報"
+    }) {
+    id
+  }
+}
+```

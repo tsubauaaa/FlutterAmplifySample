@@ -31,8 +31,10 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _configureAmplify() async {
-    AmplifyDataStore dataStorePlugin = AmplifyDataStore(modelProvider: ModelProvider.instance);
-    await Amplify.addPlugins([AmplifyAuthCognito(), dataStorePlugin, AmplifyAPI()]);
+    AmplifyDataStore dataStorePlugin =
+        AmplifyDataStore(modelProvider: ModelProvider.instance);
+    await Amplify.addPlugins(
+        [AmplifyAuthCognito(), dataStorePlugin, AmplifyAPI()]);
     try {
       await Amplify.configure(amplifyconfig);
       debugPrint('Successfully configured Amplify');
@@ -51,20 +53,25 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: _amplifyConfigured ? Consumer(
-          builder: (context, ref, child) {
-            final currentUser = ref.watch(authUserProvider);
-            return currentUser.when(
-                data: (user) {
-                  if (user.isEmpty) {
-                    return const LoginPage();
-                  }
-                  return const EventPage();
+        home: _amplifyConfigured
+            ? Consumer(
+                builder: (context, ref, child) {
+                  final currentUser = ref.watch(authUserProvider);
+                  return currentUser.when(
+                    data: (user) {
+                      if (user.isEmpty) {
+                        return const LoginPage();
+                      }
+                      return const EventPage();
+                    },
+                    error: (error, stack) => Text(
+                      error.toString(),
+                    ),
+                    loading: () => const CircularProgressIndicator(),
+                  );
                 },
-                error: (error, stack) => Text(error.toString(),),
-                loading: () => const CircularProgressIndicator(),);
-          },
-        ) : const CircularProgressIndicator(),
+              )
+            : const CircularProgressIndicator(),
       ),
     );
   }

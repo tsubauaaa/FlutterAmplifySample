@@ -5,8 +5,13 @@
     "serviceName": "AppSync",
     "gqlSchemaPath": "/Users/ts-hirota/git/github/tsubauaaa/FlutterAmplifySample/app/amplify/backend/api/flutteramplifysample/schema.graphql",
     "defaultAuthType": {
-      "mode": "AMAZON_COGNITO_USER_POOLS",
-      "cognitoUserPoolId": "authflutteramplifysample4ad532dc"
+      "mode": "API_KEY",
+      "expirationTime": 7
+    },
+    "conflictResolution": {
+      "defaultResolutionStrategy": {
+        "type": "AUTOMERGE"
+      }
     }
   }
 }
