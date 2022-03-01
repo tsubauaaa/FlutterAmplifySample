@@ -82,3 +82,30 @@ $ aws cognito-idp admin-set-user-password \
 --password 'XXXXXXX' \
 --permanent
 ```
+
+## Amplify Api Add
+
+```
+$ amplify add api
+```
+
+- GraphQL
+- authorization type -> Amazon Cognito User Pool
+- schema template -> Single object with fields
+- schema.graphql を編集する
+
+```
+$ amplify push
+```
+
+## Amplify Codegen models
+
+```
+$ amplify codegen models
+```
+
+- ./lib/models に作成したスキーマのモデルクラスが作成される
+
+## Install amplify_api / amplify_datastore
+
+- pubspec.yaml に amplify_api と amplify_datastore をインストールする
