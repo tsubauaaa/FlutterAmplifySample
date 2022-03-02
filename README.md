@@ -140,3 +140,22 @@ mutation addEvent {
 ```
 
 AWS Console からのクエリだと Subscription がうまくいかなかったので注意
+
+## Amplify Storage add
+
+```
+$ amplify add storage
+```
+
+- Content
+- friendly name -> Default
+- bucket name -> Default
+- have access -> Auth user only
+- kind of access -> create/update, read, delete
+- add a Lambda Trigger -> no
+
+### Amplify Push
+
+```
+$ amplify push
+```

@@ -1,0 +1,13 @@
+{
+  "resourceName": "s3fa90afaf",
+  "policyUUID": "fa90afaf",
+  "bucketName": "flutteramplifysample3169682a2cab4a90a22af84f7d3",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "groupAccess": {}
+}

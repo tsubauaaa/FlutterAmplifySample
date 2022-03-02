@@ -9,6 +9,7 @@ import 'package:app/pages/login_page.dart';
 import 'package:app/providers/auth_user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,10 +32,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _configureAmplify() async {
-    AmplifyDataStore dataStorePlugin =
-        AmplifyDataStore(modelProvider: ModelProvider.instance);
-    await Amplify.addPlugins(
-        [AmplifyAuthCognito(), dataStorePlugin, AmplifyAPI()]);
+    await Amplify.addPlugins([
+      AmplifyAuthCognito(),
+      AmplifyDataStore(modelProvider: ModelProvider.instance),
+      AmplifyAPI(),
+      AmplifyStorageS3(),
+    ]);
     try {
       await Amplify.configure(amplifyconfig);
       debugPrint('Successfully configured Amplify');

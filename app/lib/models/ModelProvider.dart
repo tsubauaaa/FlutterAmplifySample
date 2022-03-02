@@ -26,7 +26,7 @@ export 'Event.dart';
 
 class ModelProvider implements ModelProviderInterface {
   @override
-  String version = "a26adadb76e87a998f7966dfe417a53a";
+  String version = "8b06cd01d4d73d6ac9f733eb47a90d83";
   @override
   List<ModelSchema> modelSchemas = [Event.schema];
   static final ModelProvider _instance = ModelProvider();

@@ -30,6 +30,7 @@ class Event extends Model {
   final String id;
   final String? _name;
   final String? _description;
+  final String? _imageKey;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
 
@@ -58,6 +59,10 @@ class Event extends Model {
     return _description;
   }
   
+  String? get imageKey {
+    return _imageKey;
+  }
+  
   TemporalDateTime? get createdAt {
     return _createdAt;
   }
@@ -66,13 +71,14 @@ class Event extends Model {
     return _updatedAt;
   }
   
-  const Event._internal({required this.id, required name, description, createdAt, updatedAt}): _name = name, _description = description, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Event._internal({required this.id, required name, description, imageKey, createdAt, updatedAt}): _name = name, _description = description, _imageKey = imageKey, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Event({String? id, required String name, String? description}) {
+  factory Event({String? id, required String name, String? description, String? imageKey}) {
     return Event._internal(
       id: id == null ? UUID.getUUID() : id,
       name: name,
-      description: description);
+      description: description,
+      imageKey: imageKey);
   }
   
   bool equals(Object other) {
@@ -85,7 +91,8 @@ class Event extends Model {
     return other is Event &&
       id == other.id &&
       _name == other._name &&
-      _description == other._description;
+      _description == other._description &&
+      _imageKey == other._imageKey;
   }
   
   @override
@@ -99,6 +106,7 @@ class Event extends Model {
     buffer.write("id=" + "$id" + ", ");
     buffer.write("name=" + "$_name" + ", ");
     buffer.write("description=" + "$_description" + ", ");
+    buffer.write("imageKey=" + "$_imageKey" + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -106,27 +114,30 @@ class Event extends Model {
     return buffer.toString();
   }
   
-  Event copyWith({String? id, String? name, String? description}) {
+  Event copyWith({String? id, String? name, String? description, String? imageKey}) {
     return Event._internal(
       id: id ?? this.id,
       name: name ?? this.name,
-      description: description ?? this.description);
+      description: description ?? this.description,
+      imageKey: imageKey ?? this.imageKey);
   }
   
   Event.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
       _name = json['name'],
       _description = json['description'],
+      _imageKey = json['imageKey'],
       _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'name': _name, 'description': _description, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'name': _name, 'description': _description, 'imageKey': _imageKey, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
   static final QueryField ID = QueryField(fieldName: "event.id");
   static final QueryField NAME = QueryField(fieldName: "name");
   static final QueryField DESCRIPTION = QueryField(fieldName: "description");
+  static final QueryField IMAGEKEY = QueryField(fieldName: "imageKey");
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Event";
     modelSchemaDefinition.pluralName = "Events";
@@ -155,6 +166,12 @@ class Event extends Model {
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: Event.DESCRIPTION,
+      isRequired: false,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: Event.IMAGEKEY,
       isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));

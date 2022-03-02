@@ -9,4 +9,5 @@ type Event
   id: ID!
   name: String!
   description: String
+  imageKey: String
 }

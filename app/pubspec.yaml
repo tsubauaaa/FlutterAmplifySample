@@ -37,7 +37,9 @@ dependencies:
   amplify_auth_cognito: ^0.4.1
   amplify_api: ^0.4.1
   amplify_datastore: ^0.4.1
+  amplify_storage_s3: ^0.4.1
   flutter_riverpod: ^1.0.3
+  image_picker: ^0.8.4+10
 
 dev_dependencies:
   flutter_test:
